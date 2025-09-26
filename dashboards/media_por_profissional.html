@@ -1,0 +1,25 @@
+<h2>Média de Avaliações por Profissional</h2>
+<canvas id="graficoMedia"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('graficoMedia').getContext('2d');
+const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ nomes|safe }},
+        datasets: [{
+            label: 'Média de Notas',
+            data: {{ medias|safe }},
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: { beginAtZero: true, max: 5 }
+        }
+    }
+});
+</script>
