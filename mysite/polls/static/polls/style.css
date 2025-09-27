@@ -1,0 +1,9 @@
+/* Centraliza os cards e dá largura consistente */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 18rem;
+}
