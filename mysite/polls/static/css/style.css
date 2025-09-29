@@ -7,3 +7,5 @@
 .card {
   width: 18rem;
 }
+.service-card .card-img-top { object-fit: cover; height: 140px; }
+.service-card .card { height: 100%; }
