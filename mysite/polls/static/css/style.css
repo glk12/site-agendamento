@@ -1,11 +1,3 @@
-/* Centraliza os cards e dá largura consistente */
-.swiper-slide {
-  display: flex;
-  justify-content: center;
+.mb-4{
+  background-color: aqua;
 }
-
-.card {
-  width: 18rem;
-}
-.service-card .card-img-top { object-fit: cover; height: 140px; }
-.service-card .card { height: 100%; }
