@@ -80,3 +80,16 @@ ul, ol {
     visibility: hidden;
     transition: .22s ease;
 }
+.navbar {
+    background-color: #2d3246 !important;
+}
+.navbar a{
+  color: white !important;
+}
+.btn.btn-primary{
+    background-color: #2d3246;
+}
+.btn.btn-primary:hover {
+    background-color: #373d57 !important;
+    border-color: #373d57 !important;
+}
