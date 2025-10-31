@@ -1,10 +1,7 @@
-body{
-	background-color: #19123B;
-}
 .card{
 	border: none;
 	border-top: 5px solid  rgb(176,106,252);
-	background: #212042;
+	background: #2d3246 ;
 	color: #57557A;
 }
 p{
@@ -74,7 +71,7 @@ p{
 .form-control{
 	border: 1px solid #57557A;
 	border-radius: 3px;
-	background: #212042;
+	background: #ffffff;
 	margin-bottom: 20px;
 	letter-spacing: 1px;
 

@@ -81,12 +81,28 @@ ul, ol {
     visibility: hidden;
     transition: .22s ease;
 }
+
+/* === NAVBAR STYLES === */
 .navbar {
     background-color: #2d3246 !important;
 }
 .navbar a{
   color: white !important;
 }
+
+/* Hover effect nos links da navbar */
+.navbar a:hover {
+    color: #f8f9fa !important;
+    transition: color 0.3s ease;
+}
+
+/* Estilo do brand (logo) */
+.navbar-brand span {
+    font-weight: 700;
+    color: white !important;
+}
+
+/* === BUTTONS === */
 .btn.btn-primary{
     background-color: #2d3246;
 }
@@ -97,4 +113,41 @@ ul, ol {
 .footer-classic {
     margin-top: 5rem;
     padding-top: 3rem;
+}
+/* Hover effects para os links da navbar */
+.navbar-nav .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    padding: 8px 15px !important;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #f8f9fa !important;
+    transform: translateY(-2px);
+}
+
+/* Efeito de linha embaixo do link no hover */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 80%;
+}
+
+/* Hover para o logo */
+.navbar-brand:hover {
+    color: #f8f9fa !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
