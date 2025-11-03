@@ -30,12 +30,24 @@
 
       <!-- Links de Login/Registro -->
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/polls/login/">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/polls/register/">Registro</a>
-        </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <span class="nav-link">Olá, {{ user.first_name|default:user.username }}</span>
+              </li>
+              <li class="nav-item">
+                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                  {% csrf_token %}
+                  <button class="btn btn-link nav-link" type="submit" >Sair</button>
+                </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Registro</a>
+              </li>
+              {% endif %}
       </ul>
     </div>
   </div>
