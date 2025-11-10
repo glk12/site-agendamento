@@ -6,3 +6,5 @@ def login(request):
     return render(request, 'login.html')
 def register(request):
     return render(request, 'register.html')
+def agendar(request): 
+    return render(request, 'polls/agendar.html')
