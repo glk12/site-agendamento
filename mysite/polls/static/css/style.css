@@ -9,6 +9,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  background-color: #030712;
 }
 
 /* Container principal ocupa todo o espaço restante */
@@ -81,20 +82,137 @@ ul, ol {
     visibility: hidden;
     transition: .22s ease;
 }
+
+/* === NAVBAR STYLES === */
 .navbar {
-    background-color: #2d3246 !important;
+    background-color: #111827 !important;
 }
-.navbar a{
-  color: white !important;
+.navbar a {
+    color: white !important;
 }
+.navbar li {
+    color: white !important;
+}
+.navbar .nav-link,
+.navbar span.nav-link,
+.navbar .btn-link.nav-link {
+    color: white !important;
+}
+.navbar .btn-link.nav-link:hover {
+    color: #f8f9fa !important;
+}
+
+/* Hover effect nos links da navbar */
+.navbar a:hover {
+    color: #f8f9fa !important;
+    transition: color 0.3s ease;
+}
+
+/* Estilo do brand (logo) */
+.navbar-brand span {
+    font-weight: 700;
+    color: white !important;
+}
+
+/* === BUTTONS === */
 .btn.btn-primary{
     background-color: #2d3246;
+    border-color: #2d3246;
+    box-shadow: none;
 }
 .btn.btn-primary:hover {
     background-color: #373d57 !important;
     border-color: #373d57 !important;
 }
+.btn.btn-primary:focus,
+.btn.btn-primary:active {
+    background-color: #373d57 !important;
+    border-color: #373d57 !important;
+    box-shadow: none !important;
+}
 .footer-classic {
     margin-top: 5rem;
     padding-top: 3rem;
+}
+/* Hover effects para os links da navbar */
+.navbar-nav .nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    padding: 8px 15px !important;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #f8f9fa !important;
+    transform: translateY(-2px);
+}
+
+/* Efeito de linha embaixo do link no hover */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 80%;
+}
+
+/* Hover para o logo */
+.navbar-brand:hover {
+    color: #f8f9fa !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* Títulos das seções principais */
+.titulo-section {
+    color: #e2e8f0;
+}
+
+/* Ajusta os cards dos carrosseis para combinar com o tema escuro */
+.service-card .card,
+.card.team-card {
+    background-color: #111827;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    color: #e2e8f0;
+}
+
+.service-card .card .card-title,
+.card.team-card .card-title {
+    color: #f8fafc;
+}
+
+.service-card .card .card-text,
+.card.team-card .card-text {
+    color: #cbd5f5;
+}
+
+/* Cor das setas dos carrosseis */
+.swiper-button-next,
+.swiper-button-prev,
+.mySwiper {
+    --swiper-navigation-color: #94a3b8;
+}
+
+.swiper-button-next,
+.swiper-button-prev,
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev,
+.teamSwiper .swiper-button-next,
+.teamSwiper .swiper-button-prev {
+    color: #94a3b8;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 24px;
+    color: inherit;
 }

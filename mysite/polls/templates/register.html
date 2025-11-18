@@ -12,31 +12,38 @@
 		<!-- Font Awesome for icons -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 		<!-- Custom CSS -->
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
 		<link rel="stylesheet" href="{% static 'css/forms.css' %}">
 	</head>
-	<body>
+	<body style="background-color:#030712  !important; min-height: 100vh;">
+		{% include 'navbar.html' %}
 		<div class="container">
 			<div class="row d-flex justify-content-center mt-5">
 				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
 					<div class="card py-3 px-2">
 						<h3 class="text-center mb-4 mt-2 login-title">REGISTRO</h3>
-						<form class="myform" method="POST">
+						<form class="myform" method="POST" novalidate>
 							{% csrf_token %}
-							<div class="form-group">
-								<label for="name">Nome Completo:</label>
-								<input type="text" class="form-control" id="name" name="name" placeholder="Digite seu nome completo" required>
+							{{ form.non_field_errors }}
+							<div class="mb-3">
+								{{ form.name.label_tag }}
+								{{ form.name }}
+								{{ form.name.errors }}
 							</div>
-							<div class="form-group">
-								<label for="email">Email:</label>
-								<input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
+							<div class="mb-3">
+								{{ form.email.label_tag }}
+								{{ form.email }}
+								{{ form.email.errors }}
 							</div>
-							<div class="form-group">
-								<label for="password">Senha:</label>
-								<input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+							<div class="mb-3">
+								{{ form.password1.label_tag }}
+								{{ form.password1 }}
+								{{ form.password1.errors }}
 							</div>
-							<div class="form-group">
-								<label for="confirm_password">Confirmar Senha:</label>
-								<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme sua senha" required>
+							<div class="mb-3">
+								{{ form.password2.label_tag }}
+								{{ form.password2 }}
+								{{ form.password2.errors }}
 							</div>
 							<div class="form-group mt-3 text-center">
 								<button type="submit" class="btn btn-primary btn-lg"><small><i class="fas fa-user-plus pr-2"></i>Registrar</small></button>

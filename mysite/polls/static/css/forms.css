@@ -1,11 +1,8 @@
-body{
-	background-color: #19123B;
-}
 .card{
 	border: none;
-	border-top: 5px solid  rgb(176,106,252);
-	background: #212042;
-	color: #57557A;
+	border-top: 5px solid  rgb(176106,252);
+	background: #111827; ;
+	color: white;
 }
 p{
 	font-weight: 600;
@@ -74,7 +71,7 @@ p{
 .form-control{
 	border: 1px solid #57557A;
 	border-radius: 3px;
-	background: #212042;
+	background: #ffffff;
 	margin-bottom: 20px;
 	letter-spacing: 1px;
 
@@ -100,7 +97,7 @@ p{
 	color: #fff;
 }
 .btn-primary{
-	background: linear-gradient(135deg, rgba(176,106,252,1) 39%,rgba(116,17,255,1) 101%);
+	background :#111827;
 	border: none;
 	border-radius: 50px;
 	min-width: 150px;
@@ -110,7 +107,7 @@ p{
 	border: none;
 }
 small{
-	color: #F2CEFF;
+	color: white;
 }
 .far.fa-user{
 	font-size: 13px;
@@ -124,12 +121,12 @@ small{
 	margin: 0;
 }
 .link-register{
-	color: rgb(176,106,252);
+	color: rgb(100, 100, 100);
 	text-decoration: none;
 	font-weight: 600;
 }
 .link-register:hover{
-	color: rgb(116,17,255);
+	color: rgb(100, 100, 100);
 	text-decoration: underline;
 }
 
