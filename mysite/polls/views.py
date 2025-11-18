@@ -18,20 +18,6 @@ def login(request):
     return render(request, 'login.html', {"form": form})
 
 def register(request):
-    if request.user.is_authenticated:
-        return redirect("index")
-    if request.method == "POST":
-        form = EmailUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect("index")
-    else:
-        form = EmailUserCreationForm()
-    return render(request, 'register.html', {"form": form})
-
-def logout(request):
-    if request.method == "POST":
-        auth_logout(request)
-        return redirect('index')
-    return redirect('index')
+    return render(request, 'register.html')
+def agendar(request): 
+    return render(request, 'polls/agendar.html')

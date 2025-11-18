@@ -1,0 +1,562 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Serviço - Agendify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+      
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+       
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+      
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+       
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        
+        .service-cards {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .service-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .service-card:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+
+        .service-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #059669;
+            font-size: 1.1rem;
+        }
+
+        .service-duration {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+      
+        .professional-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .professional-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .professional-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .professional-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .professional-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #3b82f6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .professional-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .professional-specialty {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+       
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .time-slot {
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover {
+            border-color: #3b82f6;
+        }
+
+        .time-slot.selected {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+       
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .btn-back:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-confirm {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        
+        .summary-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            margin-top: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #64748b;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+       
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Agendify</div>
+                <ul class="nav-links">
+                    <li><a href="/polls/">Home</a></li>
+                    <li><a href="#">Serviços</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Agendar Serviço</h1>
+                <p>Selecione o serviço desejado e escolha um horário disponível</p>
+            </div>
+
+            <div class="form-grid">
+                
+                <div class="form-section">
+                    <h3 class="section-title">Serviços</h3>
+                    <div class="service-cards">
+                        <div class="service-card selected">
+                            <div class="service-header">
+                                <div class="service-name">Corte de Cabelo</div>
+                                <div class="service-price">R$ 30,00</div>
+                            </div>
+                            <div class="service-duration">30 minutos</div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-name">Barba</div>
+                                <div class="service-price">R$ 20,00</div>
+                            </div>
+                            <div class="service-duration">20 minutos</div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-name">Sobrancelha</div>
+                                <div class="service-price">R$ 15,00</div>
+                            </div>
+                            <div class="service-duration">15 minutos</div>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-name">Hidratação</div>
+                                <div class="service-price">R$ 40,00</div>
+                            </div>
+                            <div class="service-duration">45 minutos</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-section">
+                    <h3 class="section-title">Profissionais</h3>
+                    <div class="professional-cards">
+                        <div class="professional-card selected">
+                            <div class="professional-avatar">JS</div>
+                            <div class="professional-name">João Silva</div>
+                            <div class="professional-specialty">Barbeiro Master</div>
+                        </div>
+                        <div class="professional-card">
+                            <div class="professional-avatar">PS</div>
+                            <div class="professional-name">Pedro Santos</div>
+                            <div class="professional-specialty">Especialista</div>
+                        </div>
+                        <div class="professional-card">
+                            <div class="professional-avatar">CL</div>
+                            <div class="professional-name">Carlos Lima</div>
+                            <div class="professional-specialty">Colorista</div>
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="form-section">
+                    <h3 class="section-title">Data</h3>
+                    <div class="form-group">
+                        <label class="form-label">Selecione a data</label>
+                        <input type="date" class="form-control" id="dataAgendamento">
+                    </div>
+                </div>
+
+               
+                <div class="form-section">
+                    <h3 class="section-title">Horário</h3>
+                    <div class="time-slots">
+                        <div class="time-slot">08:00</div>
+                        <div class="time-slot">09:00</div>
+                        <div class="time-slot">10:00</div>
+                        <div class="time-slot">11:00</div>
+                        <div class="time-slot">14:00</div>
+                        <div class="time-slot selected">15:00</div>
+                        <div class="time-slot">16:00</div>
+                        <div class="time-slot">17:00</div>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="summary-section">
+                <h3 class="section-title">Resumo do Agendamento</h3>
+                <div class="summary-item">
+                    <span class="summary-label">Serviço:</span>
+                    <span class="summary-value" id="resumoServico">Corte de Cabelo</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Profissional:</span>
+                    <span class="summary-value" id="resumoProfissional">João Silva</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Data:</span>
+                    <span class="summary-value" id="resumoData">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Horário:</span>
+                    <span class="summary-value" id="resumoHorario">15:00</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Valor:</span>
+                    <span class="summary-value" id="resumoValor">R$ 30,00</span>
+                </div>
+            </div>
+
+          
+            <div class="action-buttons">
+                <button class="btn btn-back" onclick="window.history.back()">Voltar</button>
+                <button class="btn btn-confirm" id="btnConfirmar">Confirmar Agendamento</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                atualizarResumo();
+            });
+        });
+
+      
+        document.querySelectorAll('.professional-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.professional-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                atualizarResumo();
+            });
+        });
+
+        
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('click', () => {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+                atualizarResumo();
+            });
+        });
+
+     
+        document.getElementById('dataAgendamento').addEventListener('change', atualizarResumo);
+
+      
+        function atualizarResumo() {
+            const servico = document.querySelector('.service-card.selected .service-name').textContent;
+            const profissional = document.querySelector('.professional-card.selected .professional-name').textContent;
+            const data = document.getElementById('dataAgendamento').value;
+            const horario = document.querySelector('.time-slot.selected').textContent;
+            const valor = document.querySelector('.service-card.selected .service-price').textContent;
+
+            document.getElementById('resumoServico').textContent = servico;
+            document.getElementById('resumoProfissional').textContent = profissional;
+            document.getElementById('resumoData').textContent = data ? new Date(data).toLocaleDateString('pt-BR') : '-';
+            document.getElementById('resumoHorario').textContent = horario;
+            document.getElementById('resumoValor').textContent = valor;
+        }
+
+        
+        document.getElementById('btnConfirmar').addEventListener('click', () => {
+            const data = document.getElementById('dataAgendamento').value;
+            if (!data) {
+                alert('Por favor, selecione uma data.');
+                return;
+            }
+
+            const servico = document.querySelector('.service-card.selected .service-name').textContent;
+            const profissional = document.querySelector('.professional-card.selected .professional-name').textContent;
+            const horario = document.querySelector('.time-slot.selected').textContent;
+            const valor = document.querySelector('.service-card.selected .service-price').textContent;
+
+            alert(`✅ Agendamento Confirmado!\n\nServiço: ${servico}\nProfissional: ${profissional}\nData: ${new Date(data).toLocaleDateString('pt-BR')}\nHorário: ${horario}\nValor: ${valor}`);
+        });
+
+        
+        const hoje = new Date().toISOString().split('T')[0];
+        document.getElementById('dataAgendamento').min = hoje;
+        document.getElementById('dataAgendamento').value = hoje;
+        
+       
+        atualizarResumo();
+    </script>
+</body>
+</html>

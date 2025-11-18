@@ -1,304 +1,550 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio</title>
+    <title>Agendify - Sistema de Agendamento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
-    <!-- CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
-    />
-  </head>
-  <body>
-    {% include 'navbar.html' %}
+        body {
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
 
-    <main>
-      <!-- CONTEÚDO PRINCIPAL -->
-      <div class="container my-5">
-        <div class="mx-auto centro">
-          <h4 class="mb-4 text-center titulo-section">Serviços</h4>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-          <!-- Swiper Serviços -->
-          <div class="swiper mySwiper px-3">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/corte.jpg' %}"
-                    width="300"
-                    height="180"
-                    class="card-img-top"
-                    alt="Corte"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Corte</h6>
-                    <p class="card-text">R$ 30,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/barba.jpg' %}"
-                    width="300"
-                    height="180"
-                    class="card-img-top"
-                    alt="Barba"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Barba</h6>
-                    <p class="card-text">R$ 20,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/sobrancelha.jpg' %}"
-                    width="300"
-                    height="180"
-                    class="card-img-top"
-                    alt="Sobrancelha"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Sobrancelha</h6>
-                    <p class="card-text">R$ 15,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
 
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/hidratacao.jpeg' %}"
-                    width="300"
-                    height="180"
-                    class="card-img-top"
-                    alt="Hidratação"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Hidratação</h6>
-                    <p class="card-text">R$ 40,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/platinado.jpg' %}"
-                    width="300"
-                    height="180"
-                    class="card-img-top"
-                    alt="Tintura"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Tintura</h6>
-                    <p class="card-text">R$ 70,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
 
-              <div class="swiper-slide service-card">
-                <div class="card">
-                  <img
-                    src="{% static 'imgs/progressiva.jpg' %}"
-                    class="card-img-top"
-                    alt="Progressiva"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Progressiva</h6>
-                    <p class="card-text">R$ 120,00</p>
-                    <a href="#" class="btn btn-primary">Agendar</a>
-                  </div>
-                </div>
-              </div>
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+      
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+
+        .service-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .btn-agendar {
+            background: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-agendar:hover {
+            background: #2563eb;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .team-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid #f1f5f9;
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-specialty {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .team-experience {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: #eff6ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.75rem;
+            color: #3b82f6;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        
+        .cta-section {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 4rem 3rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-title {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            color: #64748b;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+        }
+
+       
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">Agendify</div>
+                <ul class="nav-links">
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#equipe">Equipe</a></li>
+                    <li><a href="#vantagens">Vantagens</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <main class="main-content">
+        <div class="container">
+            
+            <div class="page-header">
+                <h1>Agendify Barbearia</h1>
+                <p>Serviços profissionais de beleza e cuidados masculinos com uma equipe especializada</p>
             </div>
 
-            <!-- Botões -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          </div>
+           
+            <section class="section" id="servicos">
+                <h2 class="section-title">Nossos Serviços</h2>
+                <p class="section-subtitle">Oferecemos uma gama completa de serviços para cuidar da sua aparência com qualidade e precisão</p>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">💇</div>
+                        <div class="service-name">Corte de Cabelo</div>
+                        <div class="service-description">Cortes modernos e clássicos, sempre seguindo as últimas tendências e seu estilo pessoal</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Corte</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🧔</div>
+                        <div class="service-name">Barba</div>
+                        <div class="service-description">Aparar, modelar e definir sua barba com técnicas profissionais para um visual impecável</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Barba</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">👁️</div>
+                        <div class="service-name">Sobrancelha</div>
+                        <div class="service-description">Design e manutenção das sobrancelhas para realçar sua expressão facial</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Sobrancelha</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">💆</div>
+                        <div class="service-name">Hidratação</div>
+                        <div class="service-description">Tratamentos hidratantes para cabelo e barba, restaurando a saúde dos fios</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Hidratação</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎨</div>
+                        <div class="service-name">Tintura</div>
+                        <div class="service-description">Serviços de coloração profissional para cobrir fios brancos ou mudar de visual</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Tintura</a>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">✨</div>
+                        <div class="service-name">Progressiva</div>
+                        <div class="service-description">Tratamento alisante profissional para cabelos lisos e disciplinados por mais tempo</div>
+                        <a href="{% url 'agendar' %}" class="btn-agendar">Agendar Progressiva</a>
+                    </div>
+                </div>
+            </section>
+
+           
+            <section class="section" id="equipe">
+                <h2 class="section-title">Nossa Equipe</h2>
+                <p class="section-subtitle">Profissionais qualificados e experientes, dedicados a proporcionar a melhor experiência</p>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <img src="{% static 'imgs/barbeiro1.jpg' %}" alt="João Silva" class="team-avatar">
+                        <div class="team-name">João Silva</div>
+                        <div class="team-specialty">Barbeiro Master</div>
+                        <div class="team-experience">12 anos de experiência</div>
+                    </div>
+                    <div class="team-card">
+                        <img src="{% static 'imgs/barbeiro2.jpg' %}" alt="Pedro Santos" class="team-avatar">
+                        <div class="team-name">Pedro Santos</div>
+                        <div class="team-specialty">Especialista em Cortes</div>
+                        <div class="team-experience">8 anos de experiência</div>
+                    </div>
+                    <div class="team-card">
+                        <img src="{% static 'imgs/barbeiro3.jpg' %}" alt="Carlos Lima" class="team-avatar">
+                        <div class="team-name">Carlos Lima</div>
+                        <div class="team-specialty">Especialista em Degradê</div>
+                        <div class="team-experience">10 anos de experiência</div>
+                    </div>
+                    <div class="team-card">
+                        <img src="{% static 'imgs/barbeiro4.jpg' %}" alt="Rafael Souza" class="team-avatar">
+                        <div class="team-name">Rafael Souza</div>
+                        <div class="team-specialty">Colorista</div>
+                        <div class="team-experience">6 anos de experiência</div>
+                    </div>
+                </div>
+            </section>
+
+           
+            <section class="section" id="vantagens">
+                <h2 class="section-title">Por que nos Escolher?</h2>
+                <p class="section-subtitle">Comprometidos com a excelência em cada detalhe do nosso atendimento</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⏰</div>
+                        <div class="feature-title">Agendamento Online</div>
+                        <div class="feature-description">Reserve seu horário de forma rápida e conveniente, 24 horas por dia</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-title">Profissionais Qualificados</div>
+                        <div class="feature-description">Equipe especializada com anos de experiência e treinamento constante</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <div class="feature-title">Qualidade Premium</div>
+                        <div class="feature-description">Utilizamos apenas produtos de alta qualidade e técnicas atualizadas</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🕒</div>
+                        <div class="feature-title">Pontualidade</div>
+                        <div class="feature-description">Respeitamos seu tempo com horários organizados e atendimento ágil</div>
+                    </div>
+                </div>
+            </section>
+
+          
+            <section class="cta-section">
+                <h2 class="cta-title">Pronto para um Novo Visual?</h2>
+                <p class="cta-description">Agende agora mesmo seu horário e venha conhecer nossos serviços</p>
+                <a href="{% url 'agendar' %}" class="btn-primary">Agendar Horário</a>
+            </section>
         </div>
-      </div>
-
-      <!-- Nossa Equipe -->
-      <div class="container my-5">
-        <div class="mx-auto centro">
-          <h4 class="mb-4 text-center titulo-section">Nossa Equipe</h4>
-
-          <!-- Swiper Equipe -->
-          <div class="swiper teamSwiper px-3">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="card team-card">
-                  <img
-                    src="{% static 'imgs/barbeiro1.jpg' %}"
-                    class="card-img-top rounded-circle mx-auto mt-3"
-                    style="width: 150px; height: 150px; object-fit: cover;"
-                    alt="Barbeiro 1"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">João Silva</h6>
-                    <p class="card-text">Barbeiro Master</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="swiper-slide">
-                <div class="card team-card">
-                  <img
-                    src="{% static 'imgs/barbeiro2.jpg' %}"
-                    class="card-img-top rounded-circle mx-auto mt-3"
-                    style="width: 150px; height: 150px; object-fit: cover;"
-                    alt="Barbeiro 2"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Pedro Santos</h6>
-                    <p class="card-text">Especialista em Cortes</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="swiper-slide">
-                <div class="card team-card">
-                  <img
-                    src="{% static 'imgs/barbeiro3.jpeg' %}"
-                    class="card-img-top rounded-circle mx-auto mt-3"
-                    style="width: 150px; height: 150px; object-fit: cover;"
-                    alt="Barbeiro 3"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Carlos Lima</h6>
-                    <p class="card-text">Especialista em Degradê</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="swiper-slide">
-                <div class="card team-card">
-                  <img
-                    src="{% static 'imgs/barbeiro4.jpg' %}"
-                    class="card-img-top rounded-circle mx-auto mt-3"
-                    style="width: 150px; height: 150px; object-fit: cover;"
-                    alt="Barbeiro 4"
-                  />
-                  <div class="card-body text-center">
-                    <h6 class="card-title">Rafael Souza</h6>
-                    <p class="card-text">Colorista</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          </div>
-        </div>
-      </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer
-      class="section footer-classic context-dark bg-image"
-      style="background: #0B1120"
-    >
-      <div class="container">
-        <div class="row row-30">
-          <div class="col-md-4 col-xl-5">
-            <div class="pr-xl-4">
-              <p>
-                We are an award-winning creative agency, dedicated to the best
-                result in web design, promotion, business consulting, and
-                marketing.
-              </p>
-              <p class="rights">
-                <span>© </span>
-                <span class="copyright-year">2018</span>
-                <span> Waves. All Rights Reserved.</span>
-              </p>
+  
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Agendify Barbearia</h3>
+                    <p>Especialistas em cuidados masculinos e serviços de beleza profissional.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li>📧 contato@agendify.com</li>
+                        <li>📞 (11) 9999-9999</li>
+                        <li>📍 Rua das Flores, 123 - Centro</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Horário de Funcionamento</h3>
+                    <ul class="footer-links">
+                        <li>Segunda a Sexta: 8h às 20h</li>
+                        <li>Sábado: 8h às 18h</li>
+                        <li>Domingo: 9h às 13h</li>
+                    </ul>
+                </div>
             </div>
-          </div>
-
-          <div class="col-md-4">
-            <h5>Contacts</h5>
-            <dl class="contact-list">
-              <dt>Address:</dt>
-              <dd>798 South Park Avenue, Jaipur, Raj</dd>
-            </dl>
-            <dl class="contact-list">
-              <dt>Email:</dt>
-              <dd><a href="mailto:#">dkstudioin@gmail.com</a></dd>
-            </dl>
-            <dl class="contact-list">
-              <dt>Phones:</dt>
-              <dd>
-                <a href="tel:#">https://karosearch.com</a>
-                <span>or</span>
-                <a href="tel:#">https://karosearch.com</a>
-              </dd>
-            </dl>
-          </div>
-
-          <div class="col-md-4 col-xl-3">
-            <h5>Links</h5>
-            <ul class="nav-list">
-              <li><a href="#">About</a></li>
-              <li><a href="#">Projects</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Contacts</a></li>
-              <li><a href="#">Pricing</a></li>
-            </ul>
-          </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Agendify Barbearia. Todos os direitos reservados.</p>
+            </div>
         </div>
-      </div>
-
-      <div class="row no-gutters social-container">
-        <div class="col">
-          <a class="social-inner" href="#">
-            <span class="icon mdi mdi-facebook"></span>
-            <span>Facebook</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="social-inner" href="#">
-            <span class="icon mdi mdi-instagram"></span>
-            <span>Instagram</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="social-inner" href="#">
-            <span class="icon mdi mdi-twitter"></span>
-            <span>Twitter</span>
-          </a>
-        </div>
-        <div class="col">
-          <a class="social-inner" href="#">
-            <span class="icon mdi mdi-youtube-play"></span>
-            <span>Google</span>
-          </a>
-        </div>
-      </div>
     </footer>
-
-    <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-  </body>
+</body>
 </html>
