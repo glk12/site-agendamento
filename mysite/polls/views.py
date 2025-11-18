@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from datetime import datetime
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from .forms import EmailUserCreationForm, EmailAuthenticationForm, AppointmentForm
+from .forms import PhoneUserCreationForm, PhoneAuthenticationForm, AppointmentForm
 from django.contrib import messages
 from .models import Service, Professional, Appointment
 
@@ -15,26 +15,26 @@ def login(request):
     if request.user.is_authenticated:
         return redirect("index")
     if request.method == "POST":
-        form = EmailAuthenticationForm(request, data=request.POST)
+        form = PhoneAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect("index")
     else:
-        form = EmailAuthenticationForm()
+        form = PhoneAuthenticationForm()
     return render(request, 'login.html', {"form": form})
 
 def register(request):
     if request.user.is_authenticated:
         return redirect("index")
     if request.method == "POST":
-        form = EmailUserCreationForm(request.POST)
+        form = PhoneUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             # autentica automaticamente após registrar
             auth_login(request, user)
             return redirect("index")
     else:
-        form = EmailUserCreationForm()
+        form = PhoneUserCreationForm()
     return render(request, 'register.html', {"form": form})
 
 @login_required(login_url='login')
@@ -96,7 +96,17 @@ def agendar(request):
                 return JsonResponse({"ok": False, "error": "Este profissional já possui um agendamento neste horário."}, status=409)
             return JsonResponse({"ok": False, "error": "Não foi possível salvar o agendamento."}, status=500)
 
-        return JsonResponse({"ok": True}, status=201)
+        return JsonResponse({
+            "ok": True,
+            "appointment": {
+                "id": appointment.id,
+                "user_id": appointment.user_id,
+                "service_id": appointment.service_id,
+                "professional_id": appointment.professional_id,
+                "date": str(appointment.date),
+                "time": appointment.time.strftime("%H:%M"),
+            }
+        }, status=201)
 
     if request.method == "POST":
         form = AppointmentForm(request.POST)
