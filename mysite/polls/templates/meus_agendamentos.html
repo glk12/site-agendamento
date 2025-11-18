@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Agendamentos - Agendify</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background: #f8fafc; color: #334155; line-height: 1.6; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header (igual ao index) */
+    .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+    .nav { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: #1e293b; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #3b82f6; }
+    .auth-links { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-outline, .btn-solid { text-decoration: none; font-weight: 600; border-radius: 8px; padding: 0.5rem 0.9rem; border: 2px solid transparent; cursor: pointer; }
+    .btn-outline { border-color: #e2e8f0; color: #1e293b; background: white; }
+    .btn-outline:hover { border-color: #94a3b8; }
+    .btn-solid, .btn-primary { background: #3b82f6; color: white; }
+    .btn-solid:hover, .btn-primary:hover { background: #2563eb; }
+
+    /* Conteúdo */
+    .main-content { padding: 2.5rem 0; }
+    .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: 1.5rem; }
+    .page-header h1 { font-size: 2rem; font-weight: 700; color: #1e293b; }
+
+    .card { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 1rem; }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th, .table td { padding: 0.9rem 0.75rem; text-align: left; border-bottom: 1px solid #f1f5f9; }
+    .table thead th { color: #475569; font-weight: 700; }
+    .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 999px; font-weight: 600; font-size: 0.8rem; }
+    .badge-primary { background: #dbeafe; color: #1e40af; }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-secondary { background: #e2e8f0; color: #334155; }
+
+    .empty { text-align: center; color: #94a3b8; padding: 4rem 1rem; }
+
+    @media (max-width: 768px) { .nav-links { display:none; } .page-header { flex-direction: column; gap: 1rem; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <div class="logo">Agendify</div>
+        <ul class="nav-links">
+          <li><a href="/polls/#servicos">Serviços</a></li>
+          <li><a href="/polls/#equipe">Equipe</a></li>
+          <li><a href="/polls/#vantagens">Vantagens</a></li>
+          <li><a href="/polls/#contato">Contato</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'meus_agendamentos' %}">Meus agendamentos</a></li>
+          {% endif %}
+        </ul>
+        <div class="auth-links">
+          {% if user.is_authenticated %}
+            <span style="color:#64748b;">Olá, {{ user.first_name|default:user.username }}</span>
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-outline">Sair</button>
+            </form>
+          {% else %}
+            <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
+            <a href="{% url 'register' %}" class="btn-solid">Registrar</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      {% if messages %}
+        <div style="margin-bottom: 1rem;">
+          {% for message in messages %}
+            <div style="padding:12px;border-radius:8px; border:1px solid #e2e8f0; background:#fff; color:#1e293b; margin-bottom:8px;">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="page-header">
+        <h1>Meus Agendamentos</h1>
+      </div>
+
+      {% if appointments %}
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Serviço</th>
+                <th>Profissional</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in appointments %}
+                <tr>
+                  <td>{{ a.date|date:"d/m/Y" }}</td>
+                  <td>{{ a.time|time:"H:i" }}</td>
+                  <td>{{ a.service.name }}</td>
+                  <td>{{ a.professional.name }}</td>
+                  <td>
+                    {% if a.status == 'scheduled' %}
+                      <span class="badge badge-primary">Agendado</span>
+                    {% elif a.status == 'completed' %}
+                      <span class="badge badge-success">Concluído</span>
+                    {% else %}
+                      <span class="badge badge-secondary">Cancelado</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="card empty">
+          <p>Você ainda não tem agendamentos.</p>
+          <div style="margin-top: 1rem;">
+            <a href="{% url 'agendar' %}" class="btn-primary" style="text-decoration:none; padding:0.75rem 1.25rem; border-radius:8px;">Agendar agora</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

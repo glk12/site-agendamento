@@ -26,6 +26,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
         </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'meus_agendamentos' %}">Meus agendamentos</a>
+        </li>
+        {% endif %}
       </ul>
 
       <!-- Links de Login/Registro -->

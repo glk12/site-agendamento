@@ -64,6 +64,26 @@
             color: #3b82f6;
         }
 
+        .auth-links {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .btn-link,
+        .btn-outline,
+        .btn-solid {
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.5rem 0.9rem;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .btn-outline { border-color: #e2e8f0; color: #1e293b; background: white; }
+        .btn-outline:hover { border-color: #94a3b8; }
+        .btn-solid { background: #3b82f6; color: white; }
+        .btn-solid:hover { background: #2563eb; }
+
         /* Main Content */
         .main-content {
             padding: 4rem 0;
@@ -88,7 +108,7 @@
             margin: 0 auto;
         }
 
-      
+
         .section {
             margin-bottom: 4rem;
         }
@@ -220,7 +240,7 @@
             font-size: 0.9rem;
         }
 
-        
+
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -265,7 +285,7 @@
             line-height: 1.5;
         }
 
-        
+
         .cta-section {
             background: white;
             border: 2px solid #e2e8f0;
@@ -311,7 +331,7 @@
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
-        
+
         .footer {
             background: #1e293b;
             color: white;
@@ -357,21 +377,21 @@
             color: #94a3b8;
         }
 
-       
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
-            
+
             .page-header h1 {
                 font-size: 2rem;
             }
-            
+
             .services-grid,
             .team-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .cta-section {
                 padding: 3rem 1.5rem;
             }
@@ -379,7 +399,7 @@
     </style>
 </head>
 <body>
-   
+
     <header class="header">
         <div class="container">
             <nav class="nav">
@@ -389,21 +409,45 @@
                     <li><a href="#equipe">Equipe</a></li>
                     <li><a href="#vantagens">Vantagens</a></li>
                     <li><a href="#contato">Contato</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'meus_agendamentos' %}">Meus agendamentos</a></li>
+                    {% endif %}
                 </ul>
+                <div class="auth-links">
+                    {% if user.is_authenticated %}
+                        <span style="color:#64748b;">Olá, {{ user.first_name|default:user.username }}</span>
+                        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-outline">Sair</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
+                        <a href="{% url 'register' %}" class="btn-solid">Registrar</a>
+                    {% endif %}
+                </div>
             </nav>
         </div>
     </header>
 
-    
+
     <main class="main-content">
         <div class="container">
-            
+                        {% if messages %}
+                            <div style="margin-bottom: 1rem;">
+                                {% for message in messages %}
+                                    <div style="padding:12px;border-radius:8px; border:1px solid #e2e8f0; background:#fff; color:#1e293b; margin-bottom:8px;">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
             <div class="page-header">
                 <h1>Agendify Barbearia</h1>
                 <p>Serviços profissionais de beleza e cuidados masculinos com uma equipe especializada</p>
             </div>
 
-           
+
             <section class="section" id="servicos">
                 <h2 class="section-title">Nossos Serviços</h2>
                 <p class="section-subtitle">Oferecemos uma gama completa de serviços para cuidar da sua aparência com qualidade e precisão</p>
@@ -447,7 +491,7 @@
                 </div>
             </section>
 
-           
+
             <section class="section" id="equipe">
                 <h2 class="section-title">Nossa Equipe</h2>
                 <p class="section-subtitle">Profissionais qualificados e experientes, dedicados a proporcionar a melhor experiência</p>
@@ -479,7 +523,7 @@
                 </div>
             </section>
 
-           
+
             <section class="section" id="vantagens">
                 <h2 class="section-title">Por que nos Escolher?</h2>
                 <p class="section-subtitle">Comprometidos com a excelência em cada detalhe do nosso atendimento</p>
@@ -507,16 +551,23 @@
                 </div>
             </section>
 
-          
+
             <section class="cta-section">
                 <h2 class="cta-title">Pronto para um Novo Visual?</h2>
                 <p class="cta-description">Agende agora mesmo seu horário e venha conhecer nossos serviços</p>
-                <a href="{% url 'agendar' %}" class="btn-primary">Agendar Horário</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'agendar' %}" class="btn-primary">Agendar Horário</a>
+                {% else %}
+                    <div style="display:flex; gap:12px; justify-content:center;">
+                        <a href="{% url 'login' %}" class="btn-outline">Entrar</a>
+                        <a href="{% url 'register' %}" class="btn-primary">Criar Conta</a>
+                    </div>
+                {% endif %}
             </section>
         </div>
     </main>
 
-  
+
     <footer class="footer" id="contato">
         <div class="container">
             <div class="footer-grid">

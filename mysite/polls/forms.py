@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Appointment
 
 
 class EmailUserCreationForm(UserCreationForm):
@@ -54,5 +55,33 @@ class EmailAuthenticationForm(AuthenticationForm):
 			"placeholder": "Digite sua senha",
 		}),
 	)
+
+
+class DateInput(forms.DateInput):
+	input_type = "date"
+
+
+class TimeInput(forms.TimeInput):
+	input_type = "time"
+
+
+class AppointmentForm(forms.ModelForm):
+	class Meta:
+		model = Appointment
+		fields = ["service", "professional", "date", "time", "notes"]
+		widgets = {
+			"service": forms.Select(attrs={"class": "form-control"}),
+			"professional": forms.Select(attrs={"class": "form-control"}),
+			"date": DateInput(attrs={"class": "form-control"}),
+			"time": TimeInput(attrs={"class": "form-control"}),
+			"notes": forms.Textarea(attrs={"class": "form-control", "rows": 3, "placeholder": "Observações (opcional)"}),
+		}
+		labels = {
+			"service": "Serviço",
+			"professional": "Profissional",
+			"date": "Data",
+			"time": "Hora",
+			"notes": "Observações",
+		}
 
 

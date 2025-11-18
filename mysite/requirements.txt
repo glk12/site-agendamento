@@ -2,3 +2,7 @@ asgiref==3.9.2
 Django==5.2.6
 django-browser-reload==1.21.0
 sqlparse==0.5.3
+
+# PostgreSQL driver (psycopg3) + binary optimizations
+psycopg==3.2.2
+psycopg-binary==3.2.2
